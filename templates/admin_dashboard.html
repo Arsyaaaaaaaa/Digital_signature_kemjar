@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4" style="max-width:900px;">
+
+    <h4 class="mb-4" style="font-weight:700;color:#1a1a2e;">Admin Dashboard</h4>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="mb-3">Pending Digital ID Requests</h5>
+            {% if pending_users %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in pending_users %}
+                        <tr>
+                            <td>{{ u.name }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>
+                                <a href="/admin/approve/{{ u.id }}" class="btn btn-success btn-sm">
+                                    Approve
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted">Tidak ada permintaan pending.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="mb-3">Approved Digital IDs</h5>
+            {% if approved_users %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in approved_users %}
+                        <tr>
+                            <td>{{ u.name }}</td>
+                            <td>{{ u.email }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted">Belum ada user yang approved.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="text-end">
+        <a href="/logout" class="btn btn-secondary">Logout</a>
+    </div>
+
+</div>
+
+{% endblock %}

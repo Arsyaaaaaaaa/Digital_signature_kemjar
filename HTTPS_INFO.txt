@@ -1,0 +1,25 @@
+=======================================================
+  DGSign HTTPS — Panduan Akses & Install CA
+=======================================================
+
+Buka di browser laptop:
+  https://localhost:5000
+  https://127.0.0.1:5000
+  https://192.168.110.249:5000   (HP satu Wi-Fi)
+
+── CARA INSTALL ROOT CA KE WINDOWS ──────────────
+File yang perlu diimport:
+  certificates/root_ca_cert.cer
+
+Langkah:
+  1. Double-click  root_ca_cert.cer
+  2. Klik  [Install Certificate]
+  3. Pilih  Local Machine  → Next
+  4. Pilih  'Place all certificates in the following store'
+  5. Browse → Trusted Root Certification Authorities → OK
+  6. Finish → Yes (konfirmasi UAC jika muncul)
+  7. TUTUP SEMUA TAB CHROME/EDGE lalu buka ulang
+
+PENTING: Setiap kali Root CA di-regenerate (hapus folder
+certificates/) Anda harus install ulang CA ke Windows.
+Selama folder certificates/ tidak dihapus, CA tidak berubah.

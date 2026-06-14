@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Navbar -->
+<nav class="navbar-top d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-2">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#f9a8d4,#ec4899);border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;">
+            <i class="bi bi-pen" style="font-size:0.95rem;"></i>
+        </div>
+        <span style="font-weight:700;color:#1a1a2e;font-size:1.05rem;">Digital<span style="color:#ec4899;">Sign</span></span>
+    </div>
+    <a href="/dashboard" class="btn btn-sm" style="background:#f3f4f6;color:#374151;border:none;border-radius:8px;font-size:0.8rem;padding:5px 12px;">
+        <i class="bi bi-arrow-left me-1"></i>Kembali ke Dashboard
+    </a>
+</nav>
+
+<div class="container" style="max-width:600px;">
+    
+    <div class="card mb-4" style="border:none;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <div class="card-header-pink d-flex flex-column align-items-center justify-content-center text-center" style="background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 100%);border-bottom:1px solid #7dd3fc;">
+            <div style="width:60px;height:60px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:15px;box-shadow:0 4px 12px rgba(2,132,199,0.15);">
+                <i class="bi bi-shield-check" style="font-size:2rem;color:#0284c7;"></i>
+            </div>
+            <h5 class="fw-bold mb-1" style="color:#0369a1;">Verifikasi Dokumen</h5>
+            <p class="mb-0 text-muted" style="font-size:0.85rem;">Unggah file PDF Anda untuk memeriksa keaslian tanda tangan digitalnya.</p>
+        </div>
+        
+        <div class="card-body p-4">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label style="font-size:0.85rem;font-weight:600;color:#374151;margin-bottom:8px;display:block;">
+                        <i class="bi bi-file-earmark-pdf text-danger me-1"></i> File PDF yang Ditandatangani
+                    </label>
+                    <input type="file" name="signed_pdf" accept=".pdf" class="form-control" style="padding:0.7rem;font-size:0.9rem;background:#f8fafc;border:1.5px dashed #cbd5e1;cursor:pointer;" required>
+                </div>
+                
+                <button type="submit" class="btn w-100" style="background:#0284c7;color:white;border-radius:10px;padding:0.75rem;font-weight:600;font-size:0.95rem;transition:all 0.2s;" onmouseover="this.style.background='#0369a1'" onmouseout="this.style.background='#0284c7'">
+                    <i class="bi bi-search me-2"></i>Verifikasi Sekarang
+                </button>
+            </form>
+            
+            {% if verification_result %}
+            <div class="mt-4 pt-4" style="border-top:1px solid #e5e7eb;">
+                <h6 class="mb-3" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;color:#6b7280;font-weight:700;">Hasil Verifikasi</h6>
+                
+                {% if verification_result == 'VALID' %}
+                <div class="p-3" style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;display:flex;align-items:center;gap:15px;">
+                    <div style="width:40px;height:40px;background:#d1fae5;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-check-lg" style="color:#059669;font-size:1.5rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0" style="color:#065f46;font-weight:700;font-size:1.1rem;">Dokumen Valid</h5>
+                        <p class="mb-0" style="color:#047857;font-size:0.85rem;margin-top:2px;">Tanda tangan digital terverifikasi dan tidak ada modifikasi pada dokumen.</p>
+                    </div>
+                </div>
+                {% elif verification_result == 'INVALID' %}
+                <div class="p-3" style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;display:flex;align-items:center;gap:15px;">
+                    <div style="width:40px;height:40px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-x-lg" style="color:#dc2626;font-size:1.5rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0" style="color:#991b1b;font-weight:700;font-size:1.1rem;">Dokumen Invalid</h5>
+                        <p class="mb-0" style="color:#b91c1c;font-size:0.85rem;margin-top:2px;">Tanda tangan tidak valid atau dokumen telah dimodifikasi setelah ditandatangani.</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="p-3" style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;display:flex;align-items:center;gap:15px;">
+                    <div style="width:40px;height:40px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-exclamation-triangle" style="color:#d97706;font-size:1.25rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0" style="color:#92400e;font-weight:700;font-size:1.0rem;">Informasi</h5>
+                        <p class="mb-0" style="color:#b45309;font-size:0.85rem;margin-top:2px;">{{ verification_result }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <p class="text-center mt-3" style="font-size:0.75rem;color:#9ca3af;">
+        <i class="bi bi-shield-lock-fill me-1"></i> Pengecekan menggunakan standar kriptografi X.509 PKI
+    </p>
+
+</div>
+
+{% endblock %}
